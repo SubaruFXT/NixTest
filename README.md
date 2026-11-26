@@ -1,40 +1,30 @@
-# NixOS Niri ISO
+# Minimal NixOS Live ISO
 
-This flake builds an x86_64 NixOS live ISO that starts directly into a Niri
-Wayland session. It also keeps the shared Niri setup in `modules/niri.nix` so a
-future installation configuration can reuse it. Hardware-specific and personal
-settings are intentionally out of scope for this repository.
+A dedicated, custom NixOS live ISO configuration for x86_64 systems.
+
+This repository is for building the live installer environment only. Installed
+desktop and laptop configurations will live in separate repositories. Home
+Manager is intentionally not part of this project.
+
+## Design
+
+- Custom ISO built from the official NixOS `iso-image.nix` module.
+- Niri as the Wayland compositor.
+- Alacritty terminal.
+- LibreWolf browser, opening the NixOS manual.
+- Fish shell.
+- Automatic TTY login followed by a Niri session.
+- UEFI, USB, and x86 BIOS boot support.
+
+The configuration is being assembled incrementally. The list above describes
+the intended environment; not every component has been configured yet.
+
+## Architecture
+
+The flake targets `x86_64-linux`. The exact Nixpkgs revision is recorded in
+`flake.lock` after the lock file is generated and committed.
 
 ## Build
 
-On a NixOS machine, or another Linux system with Nix flakes enabled:
-
-```sh
-nix flake lock
-nix build .#iso
-```
-
-The ISO will be available at `result/iso/nixos-niri-x86_64-linux.iso`.
-
-To write it to a USB drive, first identify the correct device carefully (for
-example with `lsblk`), then use a suitable imaging tool. Writing an image to the
-wrong device can destroy data.
-
-## Live environment
-
-The ISO uses the standard NixOS minimal installer base, NetworkManager, and an
-autologin Niri session for the temporary `nixos` live user. It includes Foot,
-Fuzzel, and Waybar. The live user's wheel access is passwordless and is intended
-only for this disposable installer environment.
-
-## Future installed systems
-
-The reusable `modules/niri.nix` enables Niri, Xwayland, and the GTK desktop
-portal. A later host configuration can import that module and add each machine's
-hardware configuration and personal settings separately.
-
-## Reproducibility
-
-After `nix flake lock`, commit `flake.lock` so later ISO builds use the same
-pinned Nixpkgs revision. The flake currently follows the Nixpkgs `nixos-unstable`
-branch until that lock file is generated and committed.
+Build instructions will be finalized after the ISO configuration is complete
+and has been evaluated on the desktop.
