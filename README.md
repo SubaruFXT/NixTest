@@ -15,6 +15,7 @@ not part of this project.
 - Fish as the live user's login shell.
 - Temporary `nixos` account with automatic login on virtual consoles.
 - NetworkManager, including `nmtui` for Wi-Fi.
+- Redistributable device firmware for broader Wi-Fi and hardware support.
 - UEFI, USB, and x86 BIOS boot support.
 - `pkgs.linuxPackages_latest` from the locked Nixpkgs revision.
 
