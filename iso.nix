@@ -21,6 +21,9 @@
   # NetworkManager provides nmtui and nmcli for Wi-Fi and wired networking.
   networking.networkmanager.enable = true;
 
+  # Enable SSH access to the live environment, as on the standard installer.
+  services.openssh.enable = true;
+
   # Enable the modern Nix CLI and flake support in the live environment.
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -60,6 +63,7 @@
     pciutils
     usbutils
     git
+    openssh
   ];
 
   # Start Niri from the first virtual console after automatic login.
