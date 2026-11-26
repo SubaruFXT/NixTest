@@ -47,6 +47,7 @@
   environment.systemPackages = with pkgs; [
     alacritty
     librewolf
+    neovim
   ];
 
   # Start Niri from the first virtual console after automatic login.
