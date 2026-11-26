@@ -48,6 +48,8 @@
     alacritty
     librewolf
     neovim
+    parted
+    gptfdisk
   ];
 
   # Start Niri from the first virtual console after automatic login.
