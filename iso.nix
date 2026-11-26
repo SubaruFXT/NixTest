@@ -15,6 +15,9 @@
 
   image.fileName = "nixos-niri-x86_64-linux.iso";
 
+  # Include redistributable device firmware, including common Wi-Fi firmware.
+  hardware.enableRedistributableFirmware = true;
+
   # NetworkManager provides nmtui and nmcli for Wi-Fi and wired networking.
   networking.networkmanager.enable = true;
 
