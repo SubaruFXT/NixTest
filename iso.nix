@@ -48,6 +48,7 @@
     alacritty
     librewolf
     neovim
+    nixos-install-tools
   ];
 
   # Start Niri from the first virtual console after automatic login.
