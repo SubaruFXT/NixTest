@@ -21,6 +21,9 @@
   # NetworkManager provides nmtui and nmcli for Wi-Fi and wired networking.
   networking.networkmanager.enable = true;
 
+  # Enable the modern Nix CLI and flake support in the live environment.
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Temporary account for the live ISO.
   users.users.nixos = {
     isNormalUser = true;
@@ -56,6 +59,7 @@
     efibootmgr
     pciutils
     usbutils
+    git
   ];
 
   # Start Niri from the first virtual console after automatic login.
