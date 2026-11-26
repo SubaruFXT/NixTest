@@ -31,6 +31,43 @@
 
   programs.fish.enable = true;
 
+  # Enable Niri without Nautilus as an additional file-manager application.
+  programs.niri = {
+    enable = true;
+    useNautilus = false;
+  };
+
+  # Use the upstream Niri default config, with only the requested Mod+B binding.
+  environment.etc."niri/config.kdl".source = ./niri-default-config.kdl;
+
+  # Applications requested for the live environment.
+  environment.systemPackages = with pkgs; [
+    alacritty
+    librewolf
+  ];
+
+  # Start Niri from the first virtual console after automatic login.
+  programs.fish.loginShellInit = ''
+    if test (tty) = /dev/tty1
+      exec niri-session
+    end
+  '';
+
+  # Open the terminal and browser when Niri's graphical session starts.
+  systemd.user.services.alacritty-autostart = {
+    description = "Open Alacritty at Niri session start";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig.ExecStart = "${pkgs.alacritty}/bin/alacritty";
+  };
+
+  systemd.user.services.librewolf-autostart = {
+    description = "Open the NixOS manual in LibreWolf at Niri session start";
+    wantedBy = [ "graphical-session.target" ];
+    partOf = [ "graphical-session.target" ];
+    serviceConfig.ExecStart = "${pkgs.librewolf}/bin/librewolf https://nixos.org/manual/";
+  };
+
   # Automatically log in to the virtual consoles as the live user.
   services.getty.autologinUser = "nixos";
 
