@@ -5,13 +5,22 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
   };
 
-  outputs = { self, nixpkgs }: {
-    nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs }:
+    let
       system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations.iso = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-      modules = [
-        ./iso.nix
-      ];
+        modules = [
+          ./iso.nix
+        ];
+      };
+
+      packages.${system}.iso =
+        self.nixosConfigurations.iso.config.system.build.isoImage;
+
+      packages.${system}.default = self.packages.${system}.iso;
     };
-  };
 }
