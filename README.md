@@ -1,30 +1,48 @@
 # Minimal NixOS Live ISO
 
-A dedicated, custom NixOS live ISO configuration for x86_64 systems.
+A dedicated custom NixOS live ISO for x86_64 systems.
 
-This repository is for building the live installer environment only. Installed
-desktop and laptop configurations will live in separate repositories. Home
-Manager is intentionally not part of this project.
+This repository builds the live environment only. Installed desktop and laptop
+configurations will live in separate repositories. Home Manager is intentionally
+not part of this project.
 
-## Design
+## Included environment
 
-- Custom ISO built from the official NixOS `iso-image.nix` module.
-- Niri as the Wayland compositor.
-- Alacritty terminal.
-- LibreWolf browser, opening the NixOS manual.
-- Fish shell.
-- Automatic TTY login followed by a Niri session.
+- Official NixOS `iso-image.nix` base module.
+- Niri, using its upstream v26.04 default configuration with one addition:
+  `Mod+B` opens the NixOS manual in LibreWolf.
+- Alacritty and LibreWolf, both started automatically when the Niri session begins.
+- Fish as the live user's login shell.
+- Temporary `nixos` account with automatic login on virtual consoles.
+- NetworkManager, including `nmtui` for Wi-Fi.
 - UEFI, USB, and x86 BIOS boot support.
+- `pkgs.linuxPackages_latest` from the locked Nixpkgs revision.
 
-The configuration is being assembled incrementally. The list above describes
-the intended environment; not every component has been configured yet.
-
-## Architecture
-
-The flake targets `x86_64-linux`. The exact Nixpkgs revision is recorded in
-`flake.lock` after the lock file is generated and committed.
+The upstream Niri configuration is kept intact. Its default Waybar startup
+command and Fuzzel/Swaylock keybindings remain, but those applications are not
+installed by this ISO configuration.
 
 ## Build
 
-Build instructions will be finalized after the ISO configuration is complete
-and has been evaluated on the desktop.
+On an x86_64 Linux system with Nix flakes enabled:
+
+```sh
+nix flake lock
+nix build .#iso
+```
+
+The ISO is written to the path reported by the build command, normally
+`result/iso/nixos-niri-x86_64-linux.iso`.
+
+Commit the generated `flake.lock` file so subsequent builds use the same
+Nixpkgs revision and package versions.
+
+## USB installation media
+
+Identify the USB device carefully before writing the ISO. Writing to the wrong
+device can destroy data. Use your preferred disk-imaging tool.
+
+## Scope
+
+This repository contains only the live ISO. It does not contain installed-system
+configurations or Home Manager configuration.
