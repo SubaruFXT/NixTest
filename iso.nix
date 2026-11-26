@@ -54,6 +54,8 @@
     e2fsprogs
     btrfs-progs
     efibootmgr
+    pciutils
+    usbutils
   ];
 
   # Start Niri from the first virtual console after automatic login.
