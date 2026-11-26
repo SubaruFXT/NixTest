@@ -43,7 +43,7 @@
   # Use the upstream Niri default config, with only the requested Mod+B binding.
   environment.etc."niri/config.kdl".source = ./niri-default-config.kdl;
 
-  # Applications and disk tools requested for the live environment.
+  # Applications and installation/recovery tools requested for the live environment.
   environment.systemPackages = with pkgs; [
     alacritty
     librewolf
@@ -53,6 +53,7 @@
     dosfstools
     e2fsprogs
     btrfs-progs
+    efibootmgr
   ];
 
   # Start Niri from the first virtual console after automatic login.
