@@ -49,7 +49,7 @@
   # Start Niri from the first virtual console after automatic login.
   programs.fish.loginShellInit = ''
     if test (tty) = /dev/tty1
-      exec niri-session
+      exec niri-session -l
     end
   '';
 
