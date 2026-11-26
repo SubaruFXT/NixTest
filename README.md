@@ -12,6 +12,7 @@ not part of this project.
 - Niri, using its upstream v26.04 default configuration with one addition:
   `Mod+B` opens the NixOS manual in LibreWolf.
 - Alacritty and LibreWolf, both started automatically when the Niri session begins.
+- Neovim as the text editor for manual configuration editing.
 - Fish as the live user's login shell.
 - Temporary `nixos` account with automatic login on virtual consoles.
 - NetworkManager, including `nmtui` for Wi-Fi.
