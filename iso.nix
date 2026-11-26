@@ -15,5 +15,27 @@
 
   image.fileName = "nixos-niri-x86_64-linux.iso";
 
+  # NetworkManager provides nmtui and nmcli for Wi-Fi and wired networking.
+  networking.networkmanager.enable = true;
+
+  # Temporary account for the live ISO.
+  users.users.nixos = {
+    isNormalUser = true;
+    initialHashedPassword = "";
+    shell = pkgs.fish;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+  };
+
+  programs.fish.enable = true;
+
+  # Automatically log in to the virtual consoles as the live user.
+  services.getty.autologinUser = "nixos";
+
+  # Passwordless sudo is appropriate for this disposable live environment.
+  security.sudo.wheelNeedsPassword = false;
+
   system.stateVersion = "26.05";
 }
