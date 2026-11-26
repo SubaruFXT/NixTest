@@ -56,14 +56,12 @@
     neovim
     parted
     gptfdisk
-    dosfstools
     e2fsprogs
     btrfs-progs
     efibootmgr
     pciutils
     usbutils
     git
-    openssh
   ];
 
   # Start Niri from the first virtual console after automatic login.
