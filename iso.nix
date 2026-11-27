@@ -73,11 +73,14 @@
 
   # Open the terminal and browser after Niri has initialized its graphical
   # session environment and started niri.service.
+  # Inherit the full session PATH so sudo, nmtui, and other NixOS commands
+  # remain available inside the autostarted terminal.
   systemd.user.services.alacritty-autostart = {
     description = "Open Alacritty at Niri session start";
     after = [ "niri.service" ];
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
+    enableDefaultPath = false;
     serviceConfig.ExecStart = "${pkgs.alacritty}/bin/alacritty";
   };
 
@@ -86,6 +89,7 @@
     after = [ "niri.service" ];
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
+    enableDefaultPath = false;
     serviceConfig.ExecStart = "${pkgs.librewolf}/bin/librewolf https://nixos.org/manual/";
   };
 
