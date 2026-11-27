@@ -71,9 +71,11 @@
     end
   '';
 
-  # Open the terminal and browser when Niri's graphical session starts.
+  # Open the terminal and browser after Niri has initialized its graphical
+  # session environment and started niri.service.
   systemd.user.services.alacritty-autostart = {
     description = "Open Alacritty at Niri session start";
+    after = [ "niri.service" ];
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     serviceConfig.ExecStart = "${pkgs.alacritty}/bin/alacritty";
@@ -81,6 +83,7 @@
 
   systemd.user.services.librewolf-autostart = {
     description = "Open the NixOS manual in LibreWolf at Niri session start";
+    after = [ "niri.service" ];
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     serviceConfig.ExecStart = "${pkgs.librewolf}/bin/librewolf https://nixos.org/manual/";
